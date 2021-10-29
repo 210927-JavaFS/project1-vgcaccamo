@@ -28,6 +28,7 @@ public class UserController implements Controller {
     };
 
     private Handler RegisterUser = ctx -> {
+        if (ctx.req.getSession(false) != null) {
             UserDTO userDTO = ctx.bodyAsClass(UserDTO.class);
             User user = new User(userDTO.getUsername(), userDTO.getPassword().hashCode(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(), userService.getRole(1));
             if (userService.addUser(user)) {
@@ -35,6 +36,9 @@ public class UserController implements Controller {
             } else {
                 ctx.status(400);
             }
+        } else {
+            ctx.status(401);
+        }
     };
 
     private Handler getAllUsers = ctx -> {
@@ -43,10 +47,11 @@ public class UserController implements Controller {
             ctx.json(list);
             ctx.status(200);
         } else {
-            ctx.status(400);
+            ctx.status(401);
         }
     };
 
+    /* used for creating initial roles
     private Handler addRole = ctx -> {
         UserRole userRole = ctx.bodyAsClass(UserRole.class);
         if (userService.addRole(userRole)) {
@@ -55,12 +60,12 @@ public class UserController implements Controller {
             ctx.status(400);
         }
     };
+     */
 
     @Override
     public void addRoutes(Javalin app) {
         app.post("/login", this.loginAttempt);
         app.post("/register", this.RegisterUser);
-        app.post("/roles", this.addRole);
         app.get("/users", this.getAllUsers);
     }
 }
