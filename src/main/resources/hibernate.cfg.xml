@@ -11,7 +11,7 @@
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">password</property>
         <property name="hibernate.connection.url">
-            jdbc:postgresql://revature-training-fall21.cfgrf25ehe0o.us-east-2.rds.amazonaws.com/project1
+            jdbc:postgresql://revature-training-fall21.cfgrf25ehe0o.us-east-2.rds.amazonaws.com:5432/project1
         </property>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <!-- Hibernate Properties -->

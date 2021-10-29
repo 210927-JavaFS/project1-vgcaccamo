@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpbDataSourceConfig">
+    <data-sources>
+      <data-source id="dddaf08c-7a1b-473d-ab4a-1dd5a87a1b21" name="project1-vgcaccamo" url="jdbc:postgresql://revature-training-fall21.cfgrf25ehe0o.us-east-2.rds.amazonaws.com:5432/project1" driverClass="org.postgresql.Driver" />
+    </data-sources>
+  </component>
+</project>

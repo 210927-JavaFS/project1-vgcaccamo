@@ -14,8 +14,8 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "roleId", referencedColumnName = "id")
     private UserRole userRole;
 
     public User(String username, int password, String firstName, String lastName, String email, UserRole userRole) {

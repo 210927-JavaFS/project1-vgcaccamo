@@ -11,26 +11,26 @@ public class Reimbursement {
     private int id;
     private int amount;
     private String description;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
     private User author;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "resolver_id", referencedColumnName = "id")
     private User resolver;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private ReimbursementStatus statusId;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private ReimbursementType typeId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "status_id", referencedColumnName = "id")
+    private ReimbursementStatus status;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    private ReimbursementType type;
 
-    public Reimbursement(int amount, String description, User author, User resolver, ReimbursementStatus statusId, ReimbursementType typeId) {
+    public Reimbursement(int amount, String description, User author, User resolver, ReimbursementStatus status, ReimbursementType type) {
         this.amount = amount;
         this.description = description;
         this.author = author;
         this.resolver = resolver;
-        this.statusId = statusId;
-        this.typeId = typeId;
+        this.status = status;
+        this.type = type;
     }
 
     public Reimbursement() {
@@ -76,20 +76,20 @@ public class Reimbursement {
         this.resolver = resolver;
     }
 
-    public ReimbursementStatus getStatusId() {
-        return statusId;
+    public ReimbursementStatus getStatus() {
+        return status;
     }
 
-    public void setStatusId(ReimbursementStatus statusId) {
-        this.statusId = statusId;
+    public void setStatus(ReimbursementStatus status) {
+        this.status = status;
     }
 
-    public ReimbursementType getTypeId() {
-        return typeId;
+    public ReimbursementType getType() {
+        return type;
     }
 
-    public void setTypeId(ReimbursementType typeId) {
-        this.typeId = typeId;
+    public void setType(ReimbursementType type) {
+        this.type = type;
     }
 
     @Override
@@ -97,12 +97,12 @@ public class Reimbursement {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reimbursement that = (Reimbursement) o;
-        return id == that.id && amount == that.amount && Objects.equals(description, that.description) && Objects.equals(author, that.author) && Objects.equals(resolver, that.resolver) && Objects.equals(statusId, that.statusId) && Objects.equals(typeId, that.typeId);
+        return id == that.id && amount == that.amount && Objects.equals(description, that.description) && Objects.equals(author, that.author) && Objects.equals(resolver, that.resolver) && Objects.equals(status, that.status) && Objects.equals(type, that.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, amount, description, author, resolver, statusId, typeId);
+        return Objects.hash(id, amount, description, author, resolver, status, type);
     }
 
     @Override
@@ -113,8 +113,8 @@ public class Reimbursement {
                 ", description='" + description + '\'' +
                 ", author=" + author +
                 ", resolver=" + resolver +
-                ", statusId=" + statusId +
-                ", typeId=" + typeId +
+                ", statusId=" + status +
+                ", typeId=" + type +
                 '}';
     }
 }

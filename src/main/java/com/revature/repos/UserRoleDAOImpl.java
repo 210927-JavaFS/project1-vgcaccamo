@@ -1,6 +1,5 @@
 package com.revature.repos;
 
-import com.revature.models.Reimbursement;
 import com.revature.models.UserRole;
 import com.revature.utils.HibernateUtil;
 import org.hibernate.HibernateException;
