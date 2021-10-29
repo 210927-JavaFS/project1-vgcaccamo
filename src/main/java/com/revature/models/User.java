@@ -10,7 +10,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String username;
-    private String password;
+    private int password;
     private String firstName;
     private String lastName;
     private String email;
@@ -18,7 +18,7 @@ public class User {
     @JoinColumn(name = "id")
     private UserRole userRole;
 
-    public User(String username, String password, String firstName, String lastName, String email, UserRole userRole) {
+    public User(String username, int password, String firstName, String lastName, String email, UserRole userRole) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -46,11 +46,11 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
+    public int getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(int password) {
         this.password = password;
     }
 
