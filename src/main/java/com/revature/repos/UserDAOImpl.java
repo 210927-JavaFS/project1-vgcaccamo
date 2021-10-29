@@ -5,10 +5,16 @@ import com.revature.utils.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
+
+
     @Override
     public List<User> findAll() {
         Session session = HibernateUtil.getSession();
@@ -24,7 +30,14 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User findByUsername(String username) {
         Session session = HibernateUtil.getSession();
-        return session.get(User.class, username);
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<User> cr = cb.createQuery(User.class);
+        Root<User> root = cr.from(User.class);
+        cr.select(root).where(root.get("username").in(username));
+
+        Query<User> query = session.createQuery(cr);
+        User result = query.getSingleResult();
+        return result;
     }
 
     @Override

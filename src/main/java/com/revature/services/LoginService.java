@@ -11,7 +11,8 @@ public class LoginService {
 
     public boolean login(LoginDTO loginDTO) {
         User user = userDAO.findByUsername(loginDTO.getUsername());
-        if (user != null && loginDTO.getPassword().hashCode() == user.getPassword()) {
+        int password = loginDTO.getPassword().hashCode();
+        if (user != null && password == user.getPassword()) {
             return true;
         }
         return false;
