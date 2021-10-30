@@ -1,6 +1,7 @@
 package com.revature.models;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -9,7 +10,7 @@ public class Reimbursement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int amount;
+    private BigDecimal amount;
     private String description;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
@@ -24,12 +25,27 @@ public class Reimbursement {
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private ReimbursementType type;
 
-    public Reimbursement(int amount, String description, User author, User resolver, ReimbursementStatus status, ReimbursementType type) {
+    public Reimbursement(BigDecimal amount, String description, User author, User resolver, ReimbursementStatus status, ReimbursementType type) {
         this.amount = amount;
         this.description = description;
         this.author = author;
         this.resolver = resolver;
         this.status = status;
+        this.type = type;
+    }
+
+    public Reimbursement(BigDecimal amount, String description, User author, ReimbursementStatus status, ReimbursementType type) {
+        this.amount = amount;
+        this.description = description;
+        this.author = author;
+        this.status = status;
+        this.type = type;
+    }
+
+    public Reimbursement(BigDecimal amount, String description, User author, ReimbursementType type) {
+        this.amount = amount;
+        this.description = description;
+        this.author = author;
         this.type = type;
     }
 
@@ -44,11 +60,11 @@ public class Reimbursement {
         this.id = id;
     }
 
-    public int getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -97,7 +113,7 @@ public class Reimbursement {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reimbursement that = (Reimbursement) o;
-        return id == that.id && amount == that.amount && Objects.equals(description, that.description) && Objects.equals(author, that.author) && Objects.equals(resolver, that.resolver) && Objects.equals(status, that.status) && Objects.equals(type, that.type);
+        return id == that.id && Objects.equals(amount, that.amount) && Objects.equals(description, that.description) && Objects.equals(author, that.author) && Objects.equals(resolver, that.resolver) && Objects.equals(status, that.status) && Objects.equals(type, that.type);
     }
 
     @Override
@@ -113,8 +129,8 @@ public class Reimbursement {
                 ", description='" + description + '\'' +
                 ", author=" + author +
                 ", resolver=" + resolver +
-                ", statusId=" + status +
-                ", typeId=" + type +
+                ", status=" + status +
+                ", type=" + type +
                 '}';
     }
 }

@@ -18,6 +18,10 @@ public class UserService {
         return userDAO.addUser(user);
     }
 
+    public User findById(int id) {
+        return userDAO.findById(id);
+    }
+
     public UserRole getRole(int id) {
         return userRoleDAO.findById(id);
     }
