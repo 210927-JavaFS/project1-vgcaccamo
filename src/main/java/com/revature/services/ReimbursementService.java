@@ -31,6 +31,10 @@ public class ReimbursementService {
         return reimbursementDAO.addReimbursement(reimbursement);
     }
 
+    public boolean updateReimbursement(Reimbursement reimbursement) {
+        return reimbursementDAO.updateReimbursement(reimbursement);
+    }
+
     public ReimbursementStatus getStatusById(int id) {
         return reimbursementStatusDAO.findById(id);
     }

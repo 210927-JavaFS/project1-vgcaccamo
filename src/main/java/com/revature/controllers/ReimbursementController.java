@@ -61,11 +61,25 @@ public class ReimbursementController implements Controller {
         }
     };
 
+    private Handler updateReimbursement = ctx -> {
+        if (ctx.req.getSession(false) != null) {
+            Reimbursement reimbursement = ctx.bodyAsClass(Reimbursement.class);
+            if (reimbursementService.updateReimbursement(reimbursement)) {
+                ctx.status(201);
+            } else {
+                ctx.status(400);
+            }
+        } else {
+            ctx.status(401);
+        }
+    };
+
     @Override
     public void addRoutes(Javalin app) {
         app.get("/reimbursements", this.viewAllReimbursements);
         app.get("/reimbursements/author/:authorId", this.viewReimbursementsByAuthor);
         app.get("/reimbursements/status/:statusId", this.viewReimbursementsByStatus);
         app.post("/reimbursements", this.addReimbursement);
+        app.put("/reimbursements/:id", this.updateReimbursement);
     }
 }
