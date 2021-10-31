@@ -2,18 +2,17 @@ package com.revature.services;
 
 import com.revature.models.Reimbursement;
 import com.revature.models.ReimbursementStatus;
+import com.revature.models.ReimbursementType;
 import com.revature.models.User;
-import com.revature.repos.ReimbursementDAO;
-import com.revature.repos.ReimbursementDAOImpl;
-import com.revature.repos.ReimbursementStatusDAO;
-import com.revature.repos.ReimbursementStatusDAOImpl;
+import com.revature.repos.*;
 
 import java.util.List;
 
 public class ReimbursementService {
 
     private ReimbursementDAO reimbursementDAO = new ReimbursementDAOImpl();
-    private ReimbursementStatusDAO reimbursementStatusDAO= new ReimbursementStatusDAOImpl();
+    private ReimbursementStatusDAO reimbursementStatusDAO = new ReimbursementStatusDAOImpl();
+    private ReimbursementTypeDAO reimbursementTypeDAO = new ReimbursementTypeDAOImpl();
 
     public List<Reimbursement> getAll() {
         return reimbursementDAO.findAll();
@@ -37,6 +36,10 @@ public class ReimbursementService {
 
     public ReimbursementStatus getStatusById(int id) {
         return reimbursementStatusDAO.findById(id);
+    }
+
+    public ReimbursementType getTypeById(int id) {
+        return reimbursementTypeDAO.findById(id);
     }
 
 }

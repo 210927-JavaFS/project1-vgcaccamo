@@ -4,12 +4,12 @@ let loginButton = document.getElementById("loginButton");
 let buttonRow = document.getElementById("buttonRow");
 let showMyTicketsButton = document.createElement("button");
 let showAllTicketsButton = document.createElement("button");
-//let addReimbursementButton = document.getElementById("addReimbursementButton");
+let addReimbursementButton = document.getElementById("addReimbursementButton");
 
 loginButton.onclick = loginUser;
 showMyTicketsButton.onclick = showMyTickets;
 showAllTicketsButton.onclick = showAllTickets;
-//addReimbursementButton.onclick = addReimbursement;
+addReimbursementButton.onclick = addReimbursement;
 
 showMyTicketsButton.innerText = "Show My Tickets";
 showAllTicketsButton.innerText = "Show All Tickets";
@@ -28,8 +28,9 @@ async function loginUser() {
 
   if (response.status === 200) {
     let login = await response.json();
-    sessionStorage.setItem("id", login.id);
-    sessionStorage.setItem("role", login.userRole.id);
+    console.log(login);
+    sessionStorage.setItem("login", JSON.stringify(login));
+    console.log(sessionStorage.getItem("login"));
     document.getElementsByClassName("formClass")[0].innerHTML = "";
     buttonRow.appendChild(showAllTicketsButton);
     buttonRow.appendChild(showMyTicketsButton);
@@ -102,7 +103,65 @@ function populateReimbursementsTable(data) {
   }
 }
 
-// function getCookie(username) {
-//   let name = username + "=";
-//   let decodedCookie = decode
-// }
+function getNewReimbursement() {
+  let newDescription = document.getElementById("newDescription").value;
+  let newAmount = document.getElementById("newAmount").value;
+  let newType;
+  const rbs = document.querySelectorAll('input[name="newType"]');
+  for (const rb of rbs) {
+    if (rb.checked) {
+      switch (rb) {
+        case "lodging":
+          newType = {
+            id: "1",
+            type: "lodging",
+          };
+          break;
+        case "travel":
+          newType = {
+            id: "2",
+            type: "travel",
+          };
+          break;
+        case "food":
+          newType = {
+            id: "3",
+            type: "food",
+          };
+          break;
+        default:
+          newType = {
+            id: "4",
+            type: "other",
+          };
+          break;
+      }
+      break;
+    }
+  }
+  let ticket = {
+    description: newDescription,
+    amount: newAmount,
+    type: newType,
+    author: JSON.parse(sessionStorage.login),
+  };
+
+  console.log(ticket);
+  return ticket;
+}
+
+async function addReimbursement() {
+  let ticket = getNewReimbursement();
+
+  let response = await fetch(URL + "reimbursements", {
+    method: "POST",
+    body: JSON.stringify(ticket),
+    credentials: "include",
+  });
+
+  if (response.status === 201) {
+    console.log("Ticket submitted.");
+  } else {
+    console.log("Something went wrong submitting your ticket.");
+  }
+}
