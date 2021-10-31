@@ -26,10 +26,6 @@ public class UserService {
         return userRoleDAO.findById(id);
     }
 
-    public boolean addRole(UserRole userRole) {
-        return userRoleDAO.addRole(userRole);
-    }
-
     public List<User> getAll() {
         return userDAO.findAll();
     }

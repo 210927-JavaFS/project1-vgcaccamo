@@ -9,12 +9,12 @@ public class LoginService {
 
     private UserDAO userDAO = new UserDAOImpl();
 
-    public boolean login(LoginDTO loginDTO) {
+    public User login(LoginDTO loginDTO) {
         User user = userDAO.findByUsername(loginDTO.getUsername());
         int password = loginDTO.getPassword().hashCode();
         if (user != null && password == user.getPassword()) {
-            return true;
+            return user;
         }
-        return false;
+        return null;
     }
 }

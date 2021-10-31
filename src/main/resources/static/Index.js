@@ -7,6 +7,7 @@ let showAllTicketsButton = document.createElement("button");
 //let addReimbursementButton = document.getElementById("addReimbursementButton");
 
 loginButton.onclick = loginUser;
+showMyTicketsButton.onclick = showMyTickets;
 showAllTicketsButton.onclick = showAllTickets;
 //addReimbursementButton.onclick = addReimbursement;
 
@@ -26,8 +27,12 @@ async function loginUser() {
   });
 
   if (response.status === 200) {
+    let login = await response.json();
+    sessionStorage.setItem("id", login.id);
+    sessionStorage.setItem("role", login.userRole.id);
     document.getElementsByClassName("formClass")[0].innerHTML = "";
     buttonRow.appendChild(showAllTicketsButton);
+    buttonRow.appendChild(showMyTicketsButton);
   } else {
     let para = document.createElement("p");
     para.setAttribute("style", "color:red");
@@ -43,7 +48,22 @@ async function showAllTickets() {
 
   if (response.status === 200) {
     let data = await response.json();
-    console.log(data);
+    populateReimbursementsTable(data);
+  } else {
+    console.log("Couldn't find any tickets, sorry!");
+  }
+}
+
+async function showMyTickets() {
+  let response = await fetch(
+    URL + "reimbursements/author/" + sessionStorage.getItem("id"),
+    {
+      credentials: "include",
+    }
+  );
+
+  if (response.status === 200) {
+    let data = await response.json();
     populateReimbursementsTable(data);
   } else {
     console.log("Couldn't find any tickets, sorry!");
@@ -81,3 +101,8 @@ function populateReimbursementsTable(data) {
     tbody.appendChild(row);
   }
 }
+
+// function getCookie(username) {
+//   let name = username + "=";
+//   let decodedCookie = decode
+// }

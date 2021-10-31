@@ -17,8 +17,10 @@ public class UserController implements Controller {
 
     private Handler loginAttempt = ctx -> {
         LoginDTO loginDTO = ctx.bodyAsClass(LoginDTO.class);
-        if (loginService.login(loginDTO)) {
+        User loggedInUser = loginService.login(loginDTO);
+        if (loggedInUser != null) {
             ctx.req.getSession();
+            ctx.json(loggedInUser);
             ctx.status(200);
         } else {
             ctx.req.getSession().invalidate();
@@ -49,17 +51,6 @@ public class UserController implements Controller {
             ctx.status(401);
         }
     };
-
-    /* used for creating initial roles
-    private Handler addRole = ctx -> {
-        UserRole userRole = ctx.bodyAsClass(UserRole.class);
-        if (userService.addRole(userRole)) {
-            ctx.status(201);
-        } else {
-            ctx.status(400);
-        }
-    };
-     */
 
     @Override
     public void addRoutes(Javalin app) {
