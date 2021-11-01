@@ -22,6 +22,36 @@
       </form>
       <button class="btn btn-danger" id="loginButton">Login</button>
     </div>
+    <br />
+    <br />
+    <form class="form-control">
+      <label for="newAmount">Amount</label>
+      <input
+        type="text"
+        pattern="^\d+(?:\.\d{0,2})$"
+        id="newAmount"
+        name="newAmount"
+      />
+      <br />
+      <label for="newDescription">Description</label>
+      <input type="text" id="newDescription" name="newDescription" />
+      <br />
+      <label for="lodging">lodging</label>
+      <input type="radio" id="lodging" name="newType" value="lodging" />
+      <br />
+      <label for="travel">travel</label>
+      <input type="radio" id="travel" name="newType" value="travel" />
+      <br />
+      <label for="food">food</label>
+      <input type="radio" id="food" name="newType" value="food" />
+      <br />
+      <label for="other">other</label>
+      <input type="radio" id="other" name="newType" value="other" />
+      <br />
+    </form>
+    <button class="btn btn-primary" id="addReimbursementButton">
+      Submit Reimbursement Ticket
+    </button>
     <div class="row" id="buttonRow">
     </div>
     <table class="table">
@@ -35,36 +65,6 @@
         </tr>
       </thead>
       <tbody id="reimbursementBody"></tbody>
-      <br />
-      <br />
-      <form class="form-control">
-        <label for="newAmount">Amount</label>
-        <input
-          type="text"
-          pattern="^\d+(?:\.\d{0,2})$"
-          id="newAmount"
-          name="newAmount"
-        />
-        <br>
-        <label for="newDescription">Description</label>
-        <input type="text" id="newDescription" name="newDescription" />
-        <br>
-        <label for="lodging">lodging</label>
-        <input type="radio" id="lodging" name="newType" value="lodging" />
-        <br>
-        <label for="travel">travel</label>
-        <input type="radio" id="travel" name="newType" value="travel" />
-        <br>
-        <label for="food">food</label>
-        <input type="radio" id="food" name="newType" value="food" />
-        <br>
-        <label for="other">other</label>
-        <input type="radio" id="other" name="newType" value="other" />
-        <br>
-      </form>
-      <button class="btn btn-primary" id="addReimbursementButton">
-        Submit Reimbursement Ticket
-      </button>
     </table>
     <script src="Index.js"></script>
   </body>

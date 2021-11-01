@@ -28,11 +28,8 @@ async function loginUser() {
 
   if (response.status === 200) {
     let login = await response.json();
-    console.log(login);
     sessionStorage.setItem("login", JSON.stringify(login));
-    console.log(sessionStorage.getItem("login"));
     document.getElementsByClassName("formClass")[0].innerHTML = "";
-    buttonRow.appendChild(showAllTicketsButton);
     buttonRow.appendChild(showMyTicketsButton);
   } else {
     let para = document.createElement("p");
@@ -56,8 +53,9 @@ async function showAllTickets() {
 }
 
 async function showMyTickets() {
+  let login = JSON.parse(sessionStorage.login);
   let response = await fetch(
-    URL + "reimbursements/author/" + sessionStorage.getItem("id"),
+    URL + "reimbursements/author/" + login.id,
     {
       credentials: "include",
     }
@@ -145,8 +143,6 @@ function getNewReimbursement() {
     type: newType,
     author: JSON.parse(sessionStorage.login),
   };
-
-  console.log(ticket);
   return ticket;
 }
 
