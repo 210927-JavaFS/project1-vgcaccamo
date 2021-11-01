@@ -28,6 +28,11 @@ public class UserController implements Controller {
         }
     };
 
+    private Handler logoutUser = ctx -> {
+        ctx.req.getSession().invalidate();
+        ctx.status(200);
+    };
+
     private Handler RegisterUser = ctx -> {
         if (ctx.req.getSession(false) != null) {
             UserDTO userDTO = ctx.bodyAsClass(UserDTO.class);
@@ -56,6 +61,7 @@ public class UserController implements Controller {
     public void addRoutes(Javalin app) {
         app.post("/login", this.loginAttempt);
         app.post("/register", this.RegisterUser);
+        app.get("/logout", this.logoutUser);
         app.get("/users", this.getAllUsers);
     }
 }

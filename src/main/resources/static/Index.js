@@ -12,8 +12,10 @@ let showDeniedTicketsButton = document.createElement("button");
 let approveTicketId = document.createElement("input");
 let approveTicketSubmit = document.createElement("button");
 let denyTicketSubmit = document.createElement("button");
+let logoutButton = document.createElement("button");
 
 loginButton.onclick = loginUser;
+logoutButton.onclick = logoutUser;
 addReimbursementButton.onclick = addReimbursement;
 showMyTicketsButton.onclick = showMyTickets;
 showAllTicketsButton.onclick = showAllTickets;
@@ -33,6 +35,7 @@ approveTicketId.placeholder = "Ticket ID#";
 approveTicketId.name = "ticketId";
 approveTicketSubmit.innerText = "Approve this ticket";
 denyTicketSubmit.innerText = "Deny this ticket";
+logoutButton.innerText = "Logout"
 
 async function loginUser() {
   let user = {
@@ -50,6 +53,7 @@ async function loginUser() {
     let login = await response.json();
     sessionStorage.setItem("login", JSON.stringify(login));
     document.getElementsByClassName("formClass")[0].innerHTML = "";
+    document.getElementById("loginOrOut").appendChild(logoutButton);
     buttonRow.appendChild(showMyTicketsButton);
     if (login.userRole.id == 2) {
       buttonRow.appendChild(showAllTicketsButton);
@@ -66,6 +70,12 @@ async function loginUser() {
     para.innerText = "LOGIN FAILED";
     document.getElementsByClassName("formClass")[0].appendChild(para);
   }
+}
+
+async function logoutUser() {
+  await fetch(URL + "logout");
+  sessionStorage.clear();
+  window.location.reload(false);
 }
 
 async function showAllTickets() {
