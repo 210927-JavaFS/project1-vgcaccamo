@@ -18,6 +18,10 @@ public class ReimbursementService {
         return reimbursementDAO.findAll();
     }
 
+    public Reimbursement getById(int id) {
+        return reimbursementDAO.findById(id);
+    }
+
     public List<Reimbursement> getByAuthor(User author) {
         return reimbursementDAO.findByAuthor(author);
     }

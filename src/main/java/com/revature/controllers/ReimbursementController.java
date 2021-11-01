@@ -61,6 +61,16 @@ public class ReimbursementController implements Controller {
         }
     };
 
+    private Handler getReimbursementById = ctx -> {
+        if (ctx.req.getSession(false) != null) {
+            Reimbursement reimbursement = reimbursementService.getById(Integer.parseInt(ctx.pathParam("id")));
+            ctx.json(reimbursement);
+            ctx.status(200);
+        } else {
+            ctx.status(401);
+        }
+    };
+
     private Handler updateReimbursement = ctx -> {
         if (ctx.req.getSession(false) != null) {
             Reimbursement reimbursement = ctx.bodyAsClass(Reimbursement.class);
@@ -80,6 +90,7 @@ public class ReimbursementController implements Controller {
         app.get("/reimbursements/author/:authorId", this.viewReimbursementsByAuthor);
         app.get("/reimbursements/status/:statusId", this.viewReimbursementsByStatus);
         app.post("/reimbursements", this.addReimbursement);
+        app.get("/reimbursements/:id", this.getReimbursementById);
         app.put("/reimbursements/:id", this.updateReimbursement);
     }
 }
