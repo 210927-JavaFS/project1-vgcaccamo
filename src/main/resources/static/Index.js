@@ -150,6 +150,7 @@ async function approveTicket() {
   });
   if (response.status === 200) {
     let reimbursement = await response.json();
+    reimbursement.resolver = JSON.parse(sessionStorage.login);
     reimbursement.status = {
       id: "2",
       status: "approved",
@@ -164,6 +165,7 @@ async function denyTicket() {
   });
   if (response.status === 200) {
     let reimbursement = await response.json();
+    reimbursement.resolver = JSON.parse(sessionStorage.login);
     reimbursement.status = {
       id: "3",
       status: "denied",
