@@ -7,6 +7,8 @@ import com.revature.services.LoginService;
 import com.revature.services.UserService;
 import io.javalin.Javalin;
 import io.javalin.http.Handler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -14,8 +16,10 @@ public class UserController implements Controller {
 
     private LoginService loginService = new LoginService();
     private UserService userService = new UserService();
+    private static Logger log = LoggerFactory.getLogger(UserController.class);
 
     private Handler loginAttempt = ctx -> {
+        log.info("attempting to login (controller)");
         LoginDTO loginDTO = ctx.bodyAsClass(LoginDTO.class);
         User loggedInUser = loginService.login(loginDTO);
         if (loggedInUser != null) {
@@ -29,11 +33,13 @@ public class UserController implements Controller {
     };
 
     private Handler logoutUser = ctx -> {
+        log.info("logging out (controller)");
         ctx.req.getSession().invalidate();
         ctx.status(200);
     };
 
     private Handler RegisterUser = ctx -> {
+        log.info("attempting to register new user (controller)");
         if (ctx.req.getSession(false) != null) {
             UserDTO userDTO = ctx.bodyAsClass(UserDTO.class);
             User user = new User(userDTO.getUsername(), userDTO.getPassword().hashCode(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(), userService.getRole(1));
@@ -48,6 +54,7 @@ public class UserController implements Controller {
     };
 
     private Handler getAllUsers = ctx -> {
+        log.info("getting all users (controller)");
         if (ctx.req.getSession(false) != null) {
             List<User> list = userService.getAll();
             ctx.json(list);

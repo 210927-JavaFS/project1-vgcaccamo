@@ -7,6 +7,8 @@ import com.revature.services.ReimbursementService;
 import com.revature.services.UserService;
 import io.javalin.Javalin;
 import io.javalin.http.Handler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -14,8 +16,10 @@ public class ReimbursementController implements Controller {
 
     ReimbursementService reimbursementService = new ReimbursementService();
     UserService userService = new UserService();
+    private static Logger log = LoggerFactory.getLogger(ReimbursementController.class);
 
     private Handler viewAllReimbursements = ctx -> {
+        log.info("getting all reimbursements (controller)");
         if (ctx.req.getSession(false) != null) {
             List<Reimbursement> list = reimbursementService.getAll();
             ctx.json(list);
@@ -26,6 +30,7 @@ public class ReimbursementController implements Controller {
     };
 
     private Handler viewReimbursementsByAuthor = ctx -> {
+        log.info("viewing reimbursements by author");
         if (ctx.req.getSession(false) != null) {
             User author = userService.findById(Integer.parseInt(ctx.pathParam("authorId")));
             List<Reimbursement> list = reimbursementService.getByAuthor(author);
@@ -37,6 +42,7 @@ public class ReimbursementController implements Controller {
     };
 
     private Handler viewReimbursementsByStatus = ctx -> {
+        log.info("viewing reimbursements by status (controller)");
         if (ctx.req.getSession(false) != null) {
             ReimbursementStatus status = reimbursementService.getStatusById(Integer.parseInt(ctx.pathParam("statusId")));
             List<Reimbursement> list = reimbursementService.getByStatus(status);
@@ -48,6 +54,7 @@ public class ReimbursementController implements Controller {
     };
 
     private Handler addReimbursement = ctx -> {
+        log.info("adding a reimbursement (controller)");
         if (ctx.req.getSession(false) != null) {
             Reimbursement reimbursement = ctx.bodyAsClass(Reimbursement.class);
             Reimbursement newReimbursement = new Reimbursement(reimbursement.getAmount(), reimbursement.getDescription(), reimbursement.getAuthor(), reimbursementService.getStatusById(1), reimbursement.getType());
@@ -62,6 +69,7 @@ public class ReimbursementController implements Controller {
     };
 
     private Handler getReimbursementById = ctx -> {
+        log.info("getting a reimbursement by id (controller)");
         if (ctx.req.getSession(false) != null) {
             Reimbursement reimbursement = reimbursementService.getById(Integer.parseInt(ctx.pathParam("id")));
             ctx.json(reimbursement);
@@ -72,6 +80,7 @@ public class ReimbursementController implements Controller {
     };
 
     private Handler updateReimbursement = ctx -> {
+        log.info("updating a reimbursement (controller)");
         if (ctx.req.getSession(false) != null) {
             Reimbursement reimbursement = ctx.bodyAsClass(Reimbursement.class);
             if (reimbursementService.updateReimbursement(reimbursement)) {
