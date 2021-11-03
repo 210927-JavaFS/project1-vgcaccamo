@@ -189,6 +189,7 @@ async function updateTicket(data) {
     console.log("Something went wrong submitting your ticket.");
   }
   approveTicketId.value = "";
+  document.getElementById("reimbursementBody").innerHTML="";
 }
 
 function populateReimbursementsTable(data) {
@@ -269,7 +270,6 @@ function getNewReimbursement() {
     author: JSON.parse(sessionStorage.login),
     submitted: Date.now(),
   };
-  console.log(ticket);
   return ticket;
 }
 
@@ -283,8 +283,9 @@ async function addReimbursement() {
   });
 
   if (response.status === 201) {
-    console.log("Ticket submitted.");
+    document.getElementById("ticketSubmission").innerText="Ticket submitted."
   } else {
-    console.log("Something went wrong submitting your ticket.");
+    document.getElementById("ticketSubmission").innerText="Something went wrong submitting your ticket.";
   }
+  document.getElementById("reimbursementBody").innerHTML="";
 }

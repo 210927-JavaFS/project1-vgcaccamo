@@ -14,6 +14,7 @@
   </head>
   <body class="container-fluid">
     <div class="formClass" id="loginOrOut">
+      <h3>You must login before using the portal.</h3>
       <form class="form-control">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" />
@@ -49,9 +50,12 @@
       <input type="radio" id="other" name="newType" value="other" />
       <br />
     </form>
+    <div>
     <button class="btn btn-primary" id="addReimbursementButton">
       Submit Reimbursement Ticket
     </button>
+    <p id="ticketSubmission"></p>
+  </div>
     <div class="row" id="buttonRow">
     </div>
     <div class="row">
