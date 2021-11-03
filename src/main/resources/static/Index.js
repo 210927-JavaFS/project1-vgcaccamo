@@ -35,7 +35,7 @@ approveTicketId.placeholder = "Ticket ID#";
 approveTicketId.name = "ticketId";
 approveTicketSubmit.innerText = "Approve this ticket";
 denyTicketSubmit.innerText = "Deny this ticket";
-logoutButton.innerText = "Logout"
+logoutButton.innerText = "Logout";
 
 async function loginUser() {
   let user = {
@@ -151,6 +151,7 @@ async function approveTicket() {
   if (response.status === 200) {
     let reimbursement = await response.json();
     reimbursement.resolver = JSON.parse(sessionStorage.login);
+    reimbursement.resolved = Date.now();
     reimbursement.status = {
       id: "2",
       status: "approved",
@@ -166,6 +167,7 @@ async function denyTicket() {
   if (response.status === 200) {
     let reimbursement = await response.json();
     reimbursement.resolver = JSON.parse(sessionStorage.login);
+    reimbursement.resolved = Date.now();
     reimbursement.status = {
       id: "3",
       status: "denied",
@@ -265,7 +267,9 @@ function getNewReimbursement() {
     amount: newAmount,
     type: newType,
     author: JSON.parse(sessionStorage.login),
+    submitted: Date.now(),
   };
+  console.log(ticket);
   return ticket;
 }
 

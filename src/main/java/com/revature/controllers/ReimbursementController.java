@@ -57,7 +57,7 @@ public class ReimbursementController implements Controller {
         log.info("adding a reimbursement (controller)");
         if (ctx.req.getSession(false) != null) {
             Reimbursement reimbursement = ctx.bodyAsClass(Reimbursement.class);
-            Reimbursement newReimbursement = new Reimbursement(reimbursement.getAmount(), reimbursement.getDescription(), reimbursement.getAuthor(), reimbursementService.getStatusById(1), reimbursement.getType());
+            Reimbursement newReimbursement = new Reimbursement(reimbursement.getAmount(), reimbursement.getDescription(), reimbursement.getSubmitted(), reimbursement.getAuthor(), reimbursementService.getStatusById(1), reimbursement.getType());
             if (reimbursementService.addReimbursement(newReimbursement)) {
                 ctx.status(201);
             } else {
