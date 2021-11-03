@@ -234,7 +234,7 @@ function getNewReimbursement() {
   const rbs = document.querySelectorAll('input[name="newType"]');
   for (const rb of rbs) {
     if (rb.checked) {
-      switch (rb) {
+      switch (rb.id) {
         case "lodging":
           newType = {
             id: "1",
